@@ -20,11 +20,10 @@ export const readArgv = <T>(
     return converted as T;
   }
 
-  const flagList = argv.slice(2);
-  for (let flag in argvNames) {
-    for (let i = 0; i < flagList.length; i++) {
-      if (flagList[i] === flag) {
-        return toType(flagList[i + 1]);
+  for (let flag of argvNames) {
+    for (let i = 0; i < argv.length; i++) {
+      if (argv[i] === flag) {
+        return toType(argv[i + 1]);
       }
     }
   }
