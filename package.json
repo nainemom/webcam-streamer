@@ -1,0 +1,27 @@
+{
+  "name": "webcam-streamer",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "NODE_ENV=development bun --hot run ./index.tsx",
+    "build": "NODE_ENV=production bun build ./index.tsx --outfile ./webcam-streamer --compile",
+    "start": "NODE_ENV=production bun run ./index.tsx"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.19.2",
+    "@types/compression": "^1.7.3",
+    "bun-types": "latest",
+    "tailwindcss": "^3.3.3",
+    "vite": "^4.4.9"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@arrow-js/core": "^1.0.0-alpha.9",
+    "body-parser": "^1.20.2",
+    "compression": "^1.7.4",
+    "nano-jsx": "^0.1.0",
+    "serve-static": "^1.15.0"
+  }
+}

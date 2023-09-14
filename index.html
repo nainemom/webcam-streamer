@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    #frame {
+      width: 100vw;
+      height: 100vh;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+
+      display: flex;
+      align-items: end;
+      justify-content: center;
+      gap: 2;
+      padding: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+
+  </div>
+
+  <script type="module">
+    import { reactive, html } from 'https://esm.sh/@arrow-js/core';
+
+    const data = reactive({
+      frame: '',
+      count: 0,
+    });
+
+    const socket = new WebSocket(`ws://${location.hostname}:3000`);
+
+
+    socket.onopen = () => console.log('Socket Opened!');
+    socket.onclose = () => console.log('Socket Closed!');
+
+    async function blobToBase64(blob) {
+      return new Promise((resolve, _) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.readAsDataURL(blob);
+      });
+    }
+
+    socket.addEventListener("message", async (event) => {
+      const blob = new Blob([event.data], {
+        type: 'image/jpeg'
+      });
+      data.frame = await blobToBase64(blob);
+    });
+
+
+    html`
+      <div id="frame" style="${() => `background-image: url('${data.frame}');`}">
+      </div>
+    `(document.querySelector('#app'))
+  </script>
+
+  <script>
+
+  </script>
+</body>
+</html>
